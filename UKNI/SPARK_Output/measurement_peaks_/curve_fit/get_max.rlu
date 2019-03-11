@@ -1,0 +1,52 @@
+/*********************************************************************
+**  This software is made available under the Open Government License 
+**  3.0.  Please attribute to the United Kingdom - Norway Initiative, 
+**  http://ukni.info (2016)
+*********************************************************************/
+/*********************************************************************
+**  Name: get_max
+**  Stored Filename: $Id: get_max.rlu 140 2016-02-03 12:34:43Z CMarsh $
+**  Status: Reviewed
+**  Created By: C Marsh
+**  <description>
+**               User defined rules for the get_max procedure in the
+**  *            Measurement_Peaks.Curve_Fit package
+**  </description>
+*********************************************************************/
+
+/******************************************************************
+**  <name> get_max_udr(1) </name>
+**  <justification> There is only one value in the for_all range (SA_F), therefore
+**  *               element(SA, [j_]) = element(SA, [SA_F])
+**  </justification>
+******************************************************************/
+get_max_udr(1): for_all(j_ : integer, SA_F <= j_ and j_ <=
+          SA_F -> element(SA, [j_]) <= element(SA, [SA_F])) may_be_deduced .
+
+/******************************************************************
+**  <name> get_max_udr(2) </name>
+**  <justification> Every element in the for_all descriptor must be less than or
+**  *               equal to the last value can be deduced from every element except
+**  *               the last value being less or equal to than MV, and the last
+**  *               value being greater than MV
+**  </justification>
+******************************************************************/
+get_max_udr(2): for_all(j_ : integer, SA_F <= j_ and j_ <= L + 1 ->
+                  element(SA, [j_]) <= element(SA, [L + 1]))
+may_be_deduced_from [
+     for_all(j_ : integer, SA_F <= j_ and j_ <= L -> element(SA, [j_]) <= MV),
+     element(SA, [L + 1]) > MV] .
+
+/******************************************************************
+**  <name> get_max_udr(3) </name>
+**  <justification> Every element in the for_all descriptor must be less than or
+**  *               equal to MV can be deduced from every element except
+**  *               the last value being less or equal to than MV, and the last
+**  *               value being less or equal to than MV
+**  </justification>
+******************************************************************/
+get_max_udr(3): for_all(j_ : integer, SA_F <= j_ and j_ <= L + 1 ->
+                  element(SA, [j_]) <= MV)
+may_be_deduced_from [
+     for_all(j_ : integer, SA_F <= j_ and j_ <= L -> element(SA, [j_]) <= MV),
+     element(SA, [L + 1]) <= MV] .

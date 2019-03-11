@@ -1,0 +1,52 @@
+/*********************************************************************
+**  This software is made available under the Open Government License 
+**  3.0.  Please attribute to the United Kingdom - Norway Initiative, 
+**  http://ukni.info (2016)
+*********************************************************************/
+/*********************************************************************
+**  Name: estimate_640_peak
+**  Stored Filename: $Id: estimate_640_peak.rlu 140 2016-02-03 12:34:43Z CMarsh $
+**  Status: Reviewed
+**  Created By: C Marsh
+**  <description>
+**               User defined rules for the estimate_640_peak procedure in the 
+**  *            Measurement.Isotopics package
+**  </description>
+*********************************************************************/
+
+/******************************************************************
+**  <name> estimate_640_peak_udr(1) </name>
+**  <justification> 
+**                 Arithmetic re-write of the conclusion splitting it into
+**  *              two halves incorporating the value of the loop counter
+**  </justification>
+******************************************************************/
+estimate_640_peak_udr(1): loop__1__n + 1 + search_array__index__subtype__1__first  <= 
+          search_array__index__subtype__1__last
+may_be_deduced_from [
+     54 + search_array__index__subtype__1__first <= search_array__index__subtype__1__last,
+     loop__1__n < 54] .
+
+/******************************************************************
+**  <name> estimate_640_peak_udr(2) </name>
+**  <justification> This udr is used to prove that the passed in peak minus
+**  *               the contributions of the 637kEv ,640kEv and 641kEv peaks
+**  *               is less than a certain amount
+**  *               The first 3 conclusions state that the passed in peak element
+**  *               (element(SA, [L1N + SA_F])) is less than 65535.
+**  *               65535 * 16384 = 1073725440.  Thus 1073725440 is the highest 
+**  *               possible value for that element.  As long as the 3 contributions
+**  *               are positive, then the hypothesis must hold true.
+**  </justification>
+******************************************************************/          
+estimate_640_peak_udr(2): (((element(SA, [L1N + SA_F]) * 16384 - 
+     H1 * toolbox__maths__exp(G * ((L1N * 16384 - C1) * (L1N * 16384 - C1)) div 268435456) div 16384) mod 4294967296 - 
+     H2 * toolbox__maths__exp(G * ((L1N * 16384 - C2) * (L1N * 16384 - C2)) div 268435456) div 16384) mod 4294967296 - 
+     H3 * toolbox__maths__exp(G * ((L1N * 16384 - C3) * (L1N * 16384 - C3)) div 268435456) div 16384) mod 4294967296 <= 1073725440
+may_be_deduced_from [
+     L1N + SA_F <= SA_L,
+     L1N + SA_F >= SA_F,
+     for_all(i___1 : integer, SA_F <= i___1 and i___1 <= SA_L -> 0 <= element(SA, [i___1]) and element(SA, [i___1]) <= 65535), 
+     H1 * toolbox__maths__exp(G * ((L1N * 16384 - C1) * (L1N * 16384 - C1)) div 268435456) div 16384 >= 0,
+     H2 * toolbox__maths__exp(G * ((L1N * 16384 - C2) * (L1N * 16384 - C2)) div 268435456) div 16384 >= 0,
+     H3 * toolbox__maths__exp(G * ((L1N * 16384 - C3) * (L1N * 16384 - C3)) div 268435456) div 16384 >= 0] .

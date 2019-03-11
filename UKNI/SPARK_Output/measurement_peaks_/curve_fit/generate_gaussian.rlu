@@ -1,0 +1,32 @@
+/*********************************************************************
+**  This software is made available under the Open Government License 
+**  3.0.  Please attribute to the United Kingdom - Norway Initiative, 
+**  http://ukni.info (2016)
+*********************************************************************/
+/*********************************************************************
+**  Name: generate_gaussian
+**  Stored Filename: $Id: generate_gaussian.rlu 140 2016-02-03 12:34:43Z CMarsh $
+**  Status: Reviewed
+**  Created By: C Marsh
+**  <description>
+**               User defined rules for the generate_gaussian procedure in the 
+**  *            Measurement_Peaks.Curve_Fit package
+**  </description>
+*********************************************************************/
+
+/******************************************************************
+**  <name> generate_gaussian_udr(1) </name>
+**  <justification> SC is in the range of C - 131072 and C - 163840, so
+**  *               (C - (SC + L2N * 16384)) ^ 2 / 268435456 is in the range of 64 .. 100, so 
+**  *               G * ((C - (SC + L2N * 16384)) ^ 2 / 268435456 is in the range 
+**  *               -35840 .. -126100
+**  </justification>
+******************************************************************/
+generate_gaussian_udr(1): G * ((C - (SC + L2N * 16384)) * (C - (SC + L2N * 16384))) div 268435456 >= - 11000000
+may_be_deduced_from [
+     SC + 147456 <= C + 16384,
+     SC + 147456 >= C - 16384,
+     L2N >= 0,
+     L2N <= 18,
+     G >= - 1261,
+     G <= - 560] .

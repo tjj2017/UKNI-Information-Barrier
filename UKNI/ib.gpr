@@ -1,0 +1,48 @@
+project Ib is
+
+   for Object_Dir use "..\IB_Phase3_Build";
+   for Main use ("Main.adb");
+   for Source_Dirs use (".", "AVR");
+   for Languages use ("Ada");
+
+   package Ide is
+      -- Hardcoded Paths of Project location and number of processors.
+      for Default_Switches ("sparkformat") use ("-add_modes", "-d=i", "-or=alphabetic", "-compress");
+      for Default_Switches ("sparksimp") use ("-nz", "-p=4");
+      for Default_Switches ("examiner") use ("-flow_analysis=information", "-index_file=C:\IB_Working\Main.idx", "-vcg", "-config=C:\IB_Working\config.cfg", "-language=2005", "-statistics", 
+           "-warning_file=C:\IB_Working\warnings.wrn", "-casing", "-rules=keen", "-html", "-error_explanations=every");
+      for Gnat use "avr-gnat";
+      for Gnatlist use "avr-gnatls";
+      for Debugger_Command use "avr-gdb";
+   end Ide;
+
+   package Builder is
+      for Default_Switches ("ada") use ("-mmcu=avr6", "-gnatp", "-save-temps", "--RTS=zfp", "-fverbose-asm", "-g", "-cargs", "-s");
+   end Builder;
+
+   package Compiler is
+      for Default_Switches ("ada") use ("-gnaty3abcefhiklL6M120nOprSstux", "-g", "--RTS=zfp", "-fcallgraph-info=su", "-gnatw.acfghijklop.pqrtuvx.xyz", "-Wunused", "-O2", "-gnatQ", "-gnatn", "-gnat05");
+   end Compiler;
+
+   package Linker is
+      for Default_Switches ("ada") use ("-mmcu=avr6", "crt1-atmega2560.S", "-nostdlib", "-lgcc", "-Wl,-mavr6,--relax", "-Tdata=0x00800200", "-g", "-fprofile-generate", "-Wl,-Map=main.map");
+   end Linker;
+
+   package Pretty_Printer is
+      for Default_Switches ("ada") use ("-A1", "-A2", "-A3", "-A4", "-A5", "-M100", "-c2", "-c3", "-c5", "-I3", "-pM", "-N", "--eol=unix");
+   end Pretty_Printer;
+
+   package Binder is
+      for Default_Switches ("ada") use ("--RTS=zfp", "-r");
+   end Binder;
+
+   package Stack is
+      for Switches use ("-ca");
+   end Stack;
+
+   package Spark is
+      for Output_Dir use "SPARK_Output";
+   end Spark;
+
+end Ib;
+

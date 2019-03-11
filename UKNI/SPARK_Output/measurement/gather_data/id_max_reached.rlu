@@ -1,0 +1,27 @@
+/*********************************************************************
+**  This software is made available under the Open Government License 
+**  3.0.  Please attribute to the United Kingdom - Norway Initiative, 
+**  http://ukni.info (2016)
+*********************************************************************/
+/*********************************************************************
+**  Name: id_max_reached
+**  Stored Filename: $Id: id_max_reached.rlu 140 2016-02-03 12:34:43Z CMarsh $
+**  Status: Reviewed
+**  Created By: C Marsh
+**  <description>
+**               User defined rules for the id_max_reached procedure in the
+**  *            Measurement package
+**  </description>
+*********************************************************************/
+
+/******************************************************************
+**  <name> id_max_reached_udr(1) </name>
+**  <justification>
+**                 Arithmetic re-write of the conclusion splitting it into
+**  *              two halves.  P < 49_999 if P < 50_000 and not equal to 50_000
+**  </justification>
+******************************************************************/
+id_max_reached_udr(1): P < 49999
+may_be_deduced_from [
+     P < 50000,
+     P <> 49999] .

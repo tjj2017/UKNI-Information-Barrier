@@ -1,0 +1,54 @@
+/*********************************************************************
+**  This software is made available under the Open Government License 
+**  3.0.  Please attribute to the United Kingdom - Norway Initiative, 
+**  http://ukni.info (2016)
+*********************************************************************/
+/*********************************************************************
+**  Name: fit_662_curve
+**  Stored Filename: $Id: fit_662_curve.rlu 140 2016-02-03 12:34:43Z CMarsh $
+**  Status: Reviewed
+**  Created By: C Marsh
+**  <description>
+**               User defined rules for the fit_662_curve procedure in the
+**  *            Measurement.Isotopics package
+**  </description>
+*********************************************************************/
+
+/******************************************************************
+**  <name> fit_662_curve_udr(1) </name>
+**  <justification> This proof requires that the update to an array is not equal
+**  *               to zero.  This proof is analysising the first element of the
+**  *               array.  Lets call the element that the array is being updated to
+**  *               X.  For the given range of P, 0 <= X - B.  As Y is greater
+**  *               than 16384, X must be greater than or equal to 16384.
+**  </justification>
+******************************************************************/
+fit_662_curve_udr(1): for_all(i_ : integer, 1 <= i_ and i_ <= 19 -> element(update(
+          mk__region_of_interest__region_of_interest_type(1), [1], element(
+          ROI, [P - 1])), [i_]) <> 0)
+may_be_deduced_from [
+     P >= 3055,
+     P <= 3073,
+     0 <= element(ROI, [P - 1]) * 16384 - B,
+     B >= 16384] .
+
+/******************************************************************
+**  <name> fit_662_curve_udr(2) </name>
+**  <justification> This proof requires that the update to an array is not equal
+**  *               to zero.  This proof is analysising the all other elements of the
+**  *               array.  Lets call the element that the array is being updated to
+**  *               X.  For the given range of the loop iterator (L), and the position
+**  *               in the original array (P), 0 <= X - B.  As B is greater
+**  *               than 16384, X must be greater than or equal to 16384.
+**  </justification>
+******************************************************************/
+fit_662_curve_udr(2): for_all(i_ : integer, 1 <= i_ and i_ <= 19 -> element(update(
+          search_array, [L + 1 - P + 1], element(
+          ROI, [L])), [i_]) <> 0)
+may_be_deduced_from [
+     L >= P,
+     L - P <= 18,
+     P >= 3055,
+     P <= 3073,
+     0 <= element(ROI, [L]) * 16384 - B,
+     B >= 16384] .

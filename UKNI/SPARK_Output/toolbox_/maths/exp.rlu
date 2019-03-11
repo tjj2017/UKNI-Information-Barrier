@@ -1,0 +1,277 @@
+/*********************************************************************
+**  This software is made available under the Open Government License 
+**  3.0.  Please attribute to the United Kingdom - Norway Initiative, 
+**  http://ukni.info (2016)
+*********************************************************************/
+/*********************************************************************
+**  Name: exp
+**  Stored Filename: $Id: exp.rlu 140 2016-02-03 12:34:43Z CMarsh $
+**  Status: Reviewed
+**  Created By: C Marsh
+**  <description>
+**               User defined rules for the exp procedure in the 
+**  *            Toolbox.Maths package
+**  *            These rules are specific to this look-up table therefor
+**  *            program names have been used
+**  </description>
+*********************************************************************/
+
+/******************************************************************
+**  <name> exp_udr(1) </name>
+**  <justification> Description of the look-up table used within the procedure
+**  *               As long as the index for the lookup table remains within
+**  *               type, the result of the look-up must be greater than the
+**  *               smallest value within the lookup table.
+**  *               This udr is for the power2 field of the look-up table.
+**  </justification>
+******************************************************************/
+exp_udr(1): fld_power2(element(mk__look_up_table_type([0] := 
+          mk__look_up_table_format_type(power2 := - 1048576, exponential := 52)
+          , [1] := mk__look_up_table_format_type(power2 := - 524288, 
+          exponential := 2406), [2] := mk__look_up_table_format_type(power2 := 
+          - 262144, exponential := 17744), [3] := mk__look_up_table_format_type(
+          power2 := - 131072, exponential := 48222), [4] := 
+          mk__look_up_table_format_type(power2 := - 65536, exponential := 79501)
+          , [5] := mk__look_up_table_format_type(power2 := - 32768, exponential 
+          := 102080), [6] := mk__look_up_table_format_type(power2 := - 16384, 
+          exponential := 115672), [7] := mk__look_up_table_format_type(power2 
+          := - 8192, exponential := 123132), [8] := 
+          mk__look_up_table_format_type(power2 := - 4096, exponential := 127040)
+          , [9] := mk__look_up_table_format_type(power2 := - 2048, exponential 
+          := 129040), [10] := mk__look_up_table_format_type(power2 := - 1024, 
+          exponential := 130052), [11] := mk__look_up_table_format_type(power2 
+          := - 512, exponential := 130561), [12] := 
+          mk__look_up_table_format_type(power2 := - 256, exponential := 130817)
+          , [13] := mk__look_up_table_format_type(power2 := - 128, exponential 
+          := 130945), [14] := mk__look_up_table_format_type(power2 := - 64, 
+          exponential := 131008), [15] := mk__look_up_table_format_type(power2 
+          := - 32, exponential := 131041), [16] := 
+          mk__look_up_table_format_type(power2 := - 16, exponential := 131055), 
+          [17] := mk__look_up_table_format_type(power2 := - 8, exponential := 
+          131063), [18] := mk__look_up_table_format_type(power2 := - 4, 
+          exponential := 131068), [19] := mk__look_up_table_format_type(power2 
+          := - 2, exponential := 131071)), [loop__1__n + 1])) >= - 2097151
+may_be_deduced_from [
+     fld_power2(element(mk__look_up_table_type([0] := 
+          mk__look_up_table_format_type(power2 := - 1048576, exponential := 52)
+          , [1] := mk__look_up_table_format_type(power2 := - 524288, 
+          exponential := 2406), [2] := mk__look_up_table_format_type(power2 := 
+          - 262144, exponential := 17744), [3] := mk__look_up_table_format_type(
+          power2 := - 131072, exponential := 48222), [4] := 
+          mk__look_up_table_format_type(power2 := - 65536, exponential := 79501)
+          , [5] := mk__look_up_table_format_type(power2 := - 32768, exponential 
+          := 102080), [6] := mk__look_up_table_format_type(power2 := - 16384, 
+          exponential := 115672), [7] := mk__look_up_table_format_type(power2 
+          := - 8192, exponential := 123132), [8] := 
+          mk__look_up_table_format_type(power2 := - 4096, exponential := 127040)
+          , [9] := mk__look_up_table_format_type(power2 := - 2048, exponential 
+          := 129040), [10] := mk__look_up_table_format_type(power2 := - 1024, 
+          exponential := 130052), [11] := mk__look_up_table_format_type(power2 
+          := - 512, exponential := 130561), [12] := 
+          mk__look_up_table_format_type(power2 := - 256, exponential := 130817)
+          , [13] := mk__look_up_table_format_type(power2 := - 128, exponential 
+          := 130945), [14] := mk__look_up_table_format_type(power2 := - 64, 
+          exponential := 131008), [15] := mk__look_up_table_format_type(power2 
+          := - 32, exponential := 131041), [16] := 
+          mk__look_up_table_format_type(power2 := - 16, exponential := 131055), 
+          [17] := mk__look_up_table_format_type(power2 := - 8, exponential := 
+          131063), [18] := mk__look_up_table_format_type(power2 := - 4, 
+          exponential := 131068), [19] := mk__look_up_table_format_type(power2 
+          := - 2, exponential := 131071)), [loop__1__n])) >= - 2097151,
+             loop__1__n >= 0,
+             loop__1__n < 19] .
+          
+/******************************************************************
+**  <name> exp_udr(2) </name>
+**  <justification> Description of the look-up table used within the procedure
+**  *               As long as the index for the lookup table remains within
+**  *               type, the result of the look-up must be less than the
+**  *               largest value within the lookup table.
+**  *               This udr is for the power2 field of the look-up table.
+**  </justification>
+******************************************************************/   
+exp_udr(2): fld_power2(element(mk__look_up_table_type([0] := 
+          mk__look_up_table_format_type(power2 := - 1048576, exponential := 52)
+          , [1] := mk__look_up_table_format_type(power2 := - 524288, 
+          exponential := 2406), [2] := mk__look_up_table_format_type(power2 := 
+          - 262144, exponential := 17744), [3] := mk__look_up_table_format_type(
+          power2 := - 131072, exponential := 48222), [4] := 
+          mk__look_up_table_format_type(power2 := - 65536, exponential := 79501)
+          , [5] := mk__look_up_table_format_type(power2 := - 32768, exponential 
+          := 102080), [6] := mk__look_up_table_format_type(power2 := - 16384, 
+          exponential := 115672), [7] := mk__look_up_table_format_type(power2 
+          := - 8192, exponential := 123132), [8] := 
+          mk__look_up_table_format_type(power2 := - 4096, exponential := 127040)
+          , [9] := mk__look_up_table_format_type(power2 := - 2048, exponential 
+          := 129040), [10] := mk__look_up_table_format_type(power2 := - 1024, 
+          exponential := 130052), [11] := mk__look_up_table_format_type(power2 
+          := - 512, exponential := 130561), [12] := 
+          mk__look_up_table_format_type(power2 := - 256, exponential := 130817)
+          , [13] := mk__look_up_table_format_type(power2 := - 128, exponential 
+          := 130945), [14] := mk__look_up_table_format_type(power2 := - 64, 
+          exponential := 131008), [15] := mk__look_up_table_format_type(power2 
+          := - 32, exponential := 131041), [16] := 
+          mk__look_up_table_format_type(power2 := - 16, exponential := 131055), 
+          [17] := mk__look_up_table_format_type(power2 := - 8, exponential := 
+          131063), [18] := mk__look_up_table_format_type(power2 := - 4, 
+          exponential := 131068), [19] := mk__look_up_table_format_type(power2 
+          := - 2, exponential := 131071)), [loop__1__n + 1])) <= 0
+may_be_deduced_from [          
+     fld_power2(element(mk__look_up_table_type([0] := 
+          mk__look_up_table_format_type(power2 := - 1048576, exponential := 52)
+          , [1] := mk__look_up_table_format_type(power2 := - 524288, 
+          exponential := 2406), [2] := mk__look_up_table_format_type(power2 := 
+          - 262144, exponential := 17744), [3] := mk__look_up_table_format_type(
+          power2 := - 131072, exponential := 48222), [4] := 
+          mk__look_up_table_format_type(power2 := - 65536, exponential := 79501)
+          , [5] := mk__look_up_table_format_type(power2 := - 32768, exponential 
+          := 102080), [6] := mk__look_up_table_format_type(power2 := - 16384, 
+          exponential := 115672), [7] := mk__look_up_table_format_type(power2 
+          := - 8192, exponential := 123132), [8] := 
+          mk__look_up_table_format_type(power2 := - 4096, exponential := 127040)
+          , [9] := mk__look_up_table_format_type(power2 := - 2048, exponential 
+          := 129040), [10] := mk__look_up_table_format_type(power2 := - 1024, 
+          exponential := 130052), [11] := mk__look_up_table_format_type(power2 
+          := - 512, exponential := 130561), [12] := 
+          mk__look_up_table_format_type(power2 := - 256, exponential := 130817)
+          , [13] := mk__look_up_table_format_type(power2 := - 128, exponential 
+          := 130945), [14] := mk__look_up_table_format_type(power2 := - 64, 
+          exponential := 131008), [15] := mk__look_up_table_format_type(power2 
+          := - 32, exponential := 131041), [16] := 
+          mk__look_up_table_format_type(power2 := - 16, exponential := 131055), 
+          [17] := mk__look_up_table_format_type(power2 := - 8, exponential := 
+          131063), [18] := mk__look_up_table_format_type(power2 := - 4, 
+          exponential := 131068), [19] := mk__look_up_table_format_type(power2 
+          := - 2, exponential := 131071)), [loop__1__n])) <= 0,
+             loop__1__n >= 0,
+             loop__1__n < 19] .
+             
+/******************************************************************
+**  <name> exp_udr(3) </name>
+**  <justification> Description of the look-up table used within the procedure
+**  *               As long as the index for the lookup table remains within
+**  *               type, the result of the look-up must be greater than the
+**  *               smallest value within the lookup table.
+**  *               This udr is for the exponential field of the look-up table.
+**  </justification>
+******************************************************************/
+exp_udr(3): fld_exponential(element(mk__look_up_table_type([0] := 
+          mk__look_up_table_format_type(power2 := - 1048576, exponential := 52)
+          , [1] := mk__look_up_table_format_type(power2 := - 524288, 
+          exponential := 2406), [2] := mk__look_up_table_format_type(power2 := 
+          - 262144, exponential := 17744), [3] := mk__look_up_table_format_type(
+          power2 := - 131072, exponential := 48222), [4] := 
+          mk__look_up_table_format_type(power2 := - 65536, exponential := 79501)
+          , [5] := mk__look_up_table_format_type(power2 := - 32768, exponential 
+          := 102080), [6] := mk__look_up_table_format_type(power2 := - 16384, 
+          exponential := 115672), [7] := mk__look_up_table_format_type(power2 
+          := - 8192, exponential := 123132), [8] := 
+          mk__look_up_table_format_type(power2 := - 4096, exponential := 127040)
+          , [9] := mk__look_up_table_format_type(power2 := - 2048, exponential 
+          := 129040), [10] := mk__look_up_table_format_type(power2 := - 1024, 
+          exponential := 130052), [11] := mk__look_up_table_format_type(power2 
+          := - 512, exponential := 130561), [12] := 
+          mk__look_up_table_format_type(power2 := - 256, exponential := 130817)
+          , [13] := mk__look_up_table_format_type(power2 := - 128, exponential 
+          := 130945), [14] := mk__look_up_table_format_type(power2 := - 64, 
+          exponential := 131008), [15] := mk__look_up_table_format_type(power2 
+          := - 32, exponential := 131041), [16] := 
+          mk__look_up_table_format_type(power2 := - 16, exponential := 131055), 
+          [17] := mk__look_up_table_format_type(power2 := - 8, exponential := 
+          131063), [18] := mk__look_up_table_format_type(power2 := - 4, 
+          exponential := 131068), [19] := mk__look_up_table_format_type(power2 
+          := - 2, exponential := 131071)), [loop__1__n + 1])) >= 0
+may_be_deduced_from [
+     fld_exponential(element(mk__look_up_table_type([0] := 
+          mk__look_up_table_format_type(power2 := - 1048576, exponential := 52)
+          , [1] := mk__look_up_table_format_type(power2 := - 524288, 
+          exponential := 2406), [2] := mk__look_up_table_format_type(power2 := 
+          - 262144, exponential := 17744), [3] := mk__look_up_table_format_type(
+          power2 := - 131072, exponential := 48222), [4] := 
+          mk__look_up_table_format_type(power2 := - 65536, exponential := 79501)
+          , [5] := mk__look_up_table_format_type(power2 := - 32768, exponential 
+          := 102080), [6] := mk__look_up_table_format_type(power2 := - 16384, 
+          exponential := 115672), [7] := mk__look_up_table_format_type(power2 
+          := - 8192, exponential := 123132), [8] := 
+          mk__look_up_table_format_type(power2 := - 4096, exponential := 127040)
+          , [9] := mk__look_up_table_format_type(power2 := - 2048, exponential 
+          := 129040), [10] := mk__look_up_table_format_type(power2 := - 1024, 
+          exponential := 130052), [11] := mk__look_up_table_format_type(power2 
+          := - 512, exponential := 130561), [12] := 
+          mk__look_up_table_format_type(power2 := - 256, exponential := 130817)
+          , [13] := mk__look_up_table_format_type(power2 := - 128, exponential 
+          := 130945), [14] := mk__look_up_table_format_type(power2 := - 64, 
+          exponential := 131008), [15] := mk__look_up_table_format_type(power2 
+          := - 32, exponential := 131041), [16] := 
+          mk__look_up_table_format_type(power2 := - 16, exponential := 131055), 
+          [17] := mk__look_up_table_format_type(power2 := - 8, exponential := 
+          131063), [18] := mk__look_up_table_format_type(power2 := - 4, 
+          exponential := 131068), [19] := mk__look_up_table_format_type(power2 
+          := - 2, exponential := 131071)), [loop__1__n])) >= 0,
+             loop__1__n >= 0,
+             loop__1__n < 19] .
+          
+/******************************************************************
+**  <name> exp_udr(4) </name>
+**  <justification> Description of the look-up table used within the procedure
+**  *               As long as the index for the lookup table remains within
+**  *               type, the result of the look-up must be less than the
+**  *               largest value within the lookup table.
+**  *               This udr is for the exponential field of the look-up table.
+**  </justification>
+******************************************************************/  
+exp_udr(4): fld_exponential(element(mk__look_up_table_type([0] := 
+          mk__look_up_table_format_type(power2 := - 1048576, exponential := 52)
+          , [1] := mk__look_up_table_format_type(power2 := - 524288, 
+          exponential := 2406), [2] := mk__look_up_table_format_type(power2 := 
+          - 262144, exponential := 17744), [3] := mk__look_up_table_format_type(
+          power2 := - 131072, exponential := 48222), [4] := 
+          mk__look_up_table_format_type(power2 := - 65536, exponential := 79501)
+          , [5] := mk__look_up_table_format_type(power2 := - 32768, exponential 
+          := 102080), [6] := mk__look_up_table_format_type(power2 := - 16384, 
+          exponential := 115672), [7] := mk__look_up_table_format_type(power2 
+          := - 8192, exponential := 123132), [8] := 
+          mk__look_up_table_format_type(power2 := - 4096, exponential := 127040)
+          , [9] := mk__look_up_table_format_type(power2 := - 2048, exponential 
+          := 129040), [10] := mk__look_up_table_format_type(power2 := - 1024, 
+          exponential := 130052), [11] := mk__look_up_table_format_type(power2 
+          := - 512, exponential := 130561), [12] := 
+          mk__look_up_table_format_type(power2 := - 256, exponential := 130817)
+          , [13] := mk__look_up_table_format_type(power2 := - 128, exponential 
+          := 130945), [14] := mk__look_up_table_format_type(power2 := - 64, 
+          exponential := 131008), [15] := mk__look_up_table_format_type(power2 
+          := - 32, exponential := 131041), [16] := 
+          mk__look_up_table_format_type(power2 := - 16, exponential := 131055), 
+          [17] := mk__look_up_table_format_type(power2 := - 8, exponential := 
+          131063), [18] := mk__look_up_table_format_type(power2 := - 4, 
+          exponential := 131068), [19] := mk__look_up_table_format_type(power2 
+          := - 2, exponential := 131071)), [loop__1__n + 1])) <= 131072
+may_be_deduced_from [
+     fld_exponential(element(mk__look_up_table_type([0] := 
+          mk__look_up_table_format_type(power2 := - 1048576, exponential := 52)
+          , [1] := mk__look_up_table_format_type(power2 := - 524288, 
+          exponential := 2406), [2] := mk__look_up_table_format_type(power2 := 
+          - 262144, exponential := 17744), [3] := mk__look_up_table_format_type(
+          power2 := - 131072, exponential := 48222), [4] := 
+          mk__look_up_table_format_type(power2 := - 65536, exponential := 79501)
+          , [5] := mk__look_up_table_format_type(power2 := - 32768, exponential 
+          := 102080), [6] := mk__look_up_table_format_type(power2 := - 16384, 
+          exponential := 115672), [7] := mk__look_up_table_format_type(power2 
+          := - 8192, exponential := 123132), [8] := 
+          mk__look_up_table_format_type(power2 := - 4096, exponential := 127040)
+          , [9] := mk__look_up_table_format_type(power2 := - 2048, exponential 
+          := 129040), [10] := mk__look_up_table_format_type(power2 := - 1024, 
+          exponential := 130052), [11] := mk__look_up_table_format_type(power2 
+          := - 512, exponential := 130561), [12] := 
+          mk__look_up_table_format_type(power2 := - 256, exponential := 130817)
+          , [13] := mk__look_up_table_format_type(power2 := - 128, exponential 
+          := 130945), [14] := mk__look_up_table_format_type(power2 := - 64, 
+          exponential := 131008), [15] := mk__look_up_table_format_type(power2 
+          := - 32, exponential := 131041), [16] := 
+          mk__look_up_table_format_type(power2 := - 16, exponential := 131055), 
+          [17] := mk__look_up_table_format_type(power2 := - 8, exponential := 
+          131063), [18] := mk__look_up_table_format_type(power2 := - 4, 
+          exponential := 131068), [19] := mk__look_up_table_format_type(power2 
+          := - 2, exponential := 131071)), [loop__1__n])) <= 131072,
+             loop__1__n >= 0,
+             loop__1__n < 19] .
