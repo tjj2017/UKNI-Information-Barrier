@@ -1,0 +1,24 @@
+/*********************************************************************
+**  This software is made available under the Open Government License 
+**  3.0.  Please attribute to the United Kingdom - Norway Initiative, 
+**  http://ukni.info (2016)
+*********************************************************************/
+/*********************************************************************
+**  Name: update_incrementer
+**  Stored Filename: $Id: update_incrementer.rlu 140 2016-02-03 12:34:43Z CMarsh $
+**  Status: Reviewed
+**  Created By: C Marsh
+**  <description>
+**               User defined rules for the update_incrementer procedure in the
+**  *            Measurement_Peaks.Curve_Fit package
+**  </description>
+*********************************************************************/
+
+/******************************************************************
+**  <name> update_incrementer_udr(1) </name>
+**  <justification> O * 29/32 is less than O if O is not zero
+**  *               O * 29/32 = O is O is zero
+**  *               Therefore the conclusion must be true
+**  </justification>
+******************************************************************/
+update_incrementer_udr(1) : O * 29 div 32 <= O may_be_deduced.

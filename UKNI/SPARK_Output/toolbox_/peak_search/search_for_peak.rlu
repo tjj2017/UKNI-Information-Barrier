@@ -1,0 +1,63 @@
+/*********************************************************************
+**  This software is made available under the Open Government License 
+**  3.0.  Please attribute to the United Kingdom - Norway Initiative, 
+**  http://ukni.info (2016)
+*********************************************************************/
+/*********************************************************************
+**  Name: search_for_peak
+**  Stored Filename: $Id: search_for_peak.rlu 140 2016-02-03 12:34:43Z CMarsh $
+**  Status: Reviewed
+**  Created By: C Marsh
+**  <description>
+**               User defined rules for the exp procedure in the 
+**  *            Toolbox.Peak_Search package
+**  </description>
+*********************************************************************/
+
+/******************************************************************
+**  <name> search_for_peak_udr(1) </name>
+**  <justification> Unwrapping of for loop for one specific instance
+**  </justification>
+******************************************************************/
+search_for_peak_udr(1): for_all(y_ : integer, A + 1 <= y_ and 
+                                   y_ <= A + 1 -> element(B, [y_]) <= 
+                                       element(B, [A + 1])) may_be_deduced .
+
+/******************************************************************
+**  <name> search_for_peak_udr(2) </name>
+**  <justification> Unwrapping of for loop for one specific instance
+**  </justification>
+******************************************************************/
+search_for_peak_udr(2): for_all(y_ : integer, A <= y_ and 
+                                   y_ <= A -> element(B, [y_]) <= 
+                                       element(B, [A])) may_be_deduced .
+
+/******************************************************************
+**  <name> search_for_peak_udr(3) </name>
+**  <justification> Unwrapping of for loop for one specific instance
+**  </justification>
+******************************************************************/
+search_for_peak_udr(3): for_all(y_ : integer, D <= y_ and 
+                                   y_ <= C + 1 -> element(B, [y_]) <= 
+                                       element(B, [D]))
+may_be_deduced_from [
+     for_all(y_ : integer, D <= y_ and
+                y_ <= C -> element(B, [y_]) <= element(B, [D])),
+     element(B, [C + 1]) <= element(B, [D])] .
+
+/******************************************************************
+**  <name> search_for_peak_udr(4) </name>
+**  <justification> Unwrapping of for loop for one specific instance
+**  </justification>
+******************************************************************/
+search_for_peak_udr(4): for_all(x_ : integer, A <= x_ and 
+                                   x_ <= C + 1 -> element(B, [C + 1]) > 
+                                       element(B, [x_]) or 
+                                       element(B, [C + 1]) = element(B, [x_]) 
+                                            and C + 1 = x_)
+may_be_deduced_from [
+     for_all(x_ : integer, A <= x_ and 
+                x_ <= D -> element(B, [D]) >
+                    element(B, [x_]) or 
+                    element(B, [D]) = element(B, [x_]) and D = x_),
+     element(B, [C + 1]) > element(B, [D])] .

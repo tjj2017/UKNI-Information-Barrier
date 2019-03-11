@@ -1,0 +1,75 @@
+/*********************************************************************
+**  This software is made available under the Open Government License 
+**  3.0.  Please attribute to the United Kingdom - Norway Initiative, 
+**  http://ukni.info (2016)
+*********************************************************************/
+/*********************************************************************
+**  Name: indicator
+**  Stored Filename: $Id: indicator.rlu 140 2016-02-03 12:34:43Z CMarsh $
+**  Status: Reviewed
+**  Created By: D Curtis
+**  <description>
+**               User defined rules for the indicator package
+**  </description>
+*********************************************************************/
+
+/******************************************************************
+**  <name> indicator_udr(1) </name>
+**  <justification> Description of a bit-wise AND for modular types
+**  *               Whilst X and Y remain within the range 0 .. 255
+**  *               the bit-wise AND will also remain within the same
+**  *               range.
+**  </justification>
+******************************************************************/
+indicator_udr(1): bit__and(255 - X, Y) >= 0
+may_be_deduced_from [
+     255-X>=0,
+     Y>=0,
+     255-X <= 255,
+     Y <= 255].
+
+/******************************************************************
+**  <name> indicator_udr(2) </name>
+**  <justification> Description of a bit-wise AND for modular types
+**  *               Whilst X and Y remain within the range 0 .. 255
+**  *               the bit-wise AND will also remain within the same
+**  *               range.
+**  </justification>
+******************************************************************/
+indicator_udr(2): bit__and(255 - X, Y) <= 255
+may_be_deduced_from [
+     255-X<=Z,
+     Y<=Z,
+     Z <= 255,
+     255-X>=0,
+     Y>=0].
+
+/******************************************************************
+**  <name> indicator_udr(3) </name>
+**  <justification> Description of a bit-wise OR for modular types
+**  *               Whilst X and Y remain within the range 0 .. 255
+**  *               the bit-wise OR will also remain within the same
+**  *               range.
+**  </justification>
+******************************************************************/
+indicator_udr(3): bit__or(X, Y) >= 0
+may_be_deduced_from [
+     X>=0,
+     Y>=0,
+     X <= 255,
+     Y <= 255].
+
+/******************************************************************
+**  <name> indicator_udr(4) </name>
+**  <justification> Description of a bit-wise OR for modular types
+**  *               Whilst X and Y remain within the range 0 .. 255
+**  *               the bit-wise OR will also remain within the same
+**  *               range.
+**  </justification>
+******************************************************************/
+indicator_udr(4): bit__or(X, Y) <= 255
+may_be_deduced_from [
+     X<=255,
+     Y<=255,
+     X>=0,
+     Y>=0].

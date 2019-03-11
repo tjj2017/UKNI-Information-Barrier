@@ -1,0 +1,277 @@
+/*********************************************************************
+**  This software is made available under the Open Government License 
+**  3.0.  Please attribute to the United Kingdom - Norway Initiative, 
+**  http://ukni.info (2016)
+*********************************************************************/
+/*********************************************************************
+**  Name: find_centroid
+**  Stored Filename: $Id: find_centroid.rlu 140 2016-02-03 12:34:43Z CMarsh $
+**  Status: Reviewed
+**  Created By: C Marsh
+**  <description>
+**               User defined rules for the exp procedure in the 
+**  *            Toolbox.Maths package
+**  </description>
+*********************************************************************/
+
+/******************************************************************
+**  <name> find_centroid_udr(1) </name>
+**  <justification> Simple re-write rule.
+**  </justification>
+******************************************************************/
+find_centroid_udr(1): B - C >= A
+may_be_deduced_from [B >= A + C] .
+
+/******************************************************************
+**  <name> find_centroid_udr(2) </name>
+**  <justification> This rule states that the current element of the array
+**  *               is greater than the previous element can be determined by
+**  *               iterating over the array from the start of the array up to 
+**  *               the current element and checking that the current 
+**  *               element is greater than all previous values or we are
+**  *               looking at the current element.
+**  </justification>
+******************************************************************/	
+find_centroid_udr(2): element(B, [A]) > element(B, [A - 1])
+may_be_deduced_from [
+     for_all(x_ : integer, B__index__subtype__1__first <= x_ and x_ <= A -> 
+          element(B, [A]) > element(B, [x_]) or 
+          element(B, [A]) = element(B, [x_]) and A = x_)] .
+
+/******************************************************************
+**  <name> find_centroid_udr(3) </name>
+**  <justification>  This rule states that the current element of the array
+**  *               is greater than the element two places before it can be 
+**  *               determined by iterating over the array from the start of the  
+**  *               array up to the current element and checking that the  
+**  *               current element is greater than all previous values or we 
+**  *               are looking at the current element.
+**  </justification>
+******************************************************************/          
+find_centroid_udr(3): element(B, [A]) > element(B, [A - 2])
+may_be_deduced_from [
+for_all(x_ : integer, B__index__subtype__1__first <= x_ and x_ <= A -> 
+          element(B, [A]) > element(B, [x_]) or 
+          element(B, [A]) = element(B, [x_]) and A = x_)] .   
+
+/******************************************************************
+**  <name> find_centroid_udr(4) </name>
+**  <justification> This rule is based around the equation
+**  *               c' = c + {m(c+1)*[m(c)-m(c-2)] - m(c-1)*[m(c)-m(c+2)]} 
+**  *                        ---------------------------------------------
+**  *                        {m(c+1)*[m(c)-m(c-2)] + m(c-1)*[m(c)-m(c+2)]}
+**  *               The result of this equation will be in the range
+**  *               c - 1 <= c' <= c + 1
+**  *               The maths is being done at * 16384
+**  *               A is greater than 0 and D is greater than 0 therefore
+**  *               the result of the equation must be greater than 0
+**  </justification>
+******************************************************************/          
+find_centroid_udr(4): A * 16384 +
+           (element(B, [A + 1]) * 
+	      (element(B, [A]) - element(B, [A - 2])) - 
+	       element(B, [A - 1]) * 
+	   (element(B, [A]) - element(B, [A + 2]))) * 16384 div 
+	   (element(B, [A + 1]) * 
+	      (element(B, [A]) - element(B, [A - 2])) + 
+	      element(B, [A - 1]) * 
+           (element(B, [A]) - element(B, [A + 2]))) + D
+          >= 0
+        may_be_deduced_from [
+          A >= 3,
+          C < 4090,
+          A <= C,
+          element(B, [A + 2]) >= 0,
+          element(B, [A + 2]) <= 65535,
+          element(B, [A + 1]) >= 0,
+          element(B, [A + 1]) <= 65535,
+          element(B, [A]) >= 0,
+          element(B, [A]) <= 65535,
+          element(B, [A - 1]) >= 0,
+          element(B, [A - 1]) <= 65535,
+          element(B, [A - 2]) >= 0,
+          element(B, [A - 2]) <= 65535,
+          element(B, [A]) >= element(B, [A + 2]),
+          element(B, [A]) > element(B, [A - 2]),
+          D >= 0,
+          D <= 12615680] .   
+
+/******************************************************************
+**  <name> find_centroid_udr(5) </name>
+**  <justification> This rule is based around the equation
+**  *               c' = c + {m(c+1)*[m(c)-m(c-2)] - m(c-1)*[m(c)-m(c+2)]} 
+**  *                        ---------------------------------------------
+**  *                        {m(c+1)*[m(c)-m(c-2)] + m(c-1)*[m(c)-m(c+2)]}
+**  *               The result of this equation will be in the range
+**  *               c - 1 <= c' <= c + 1
+**  *               The maths is being done at * 16384
+**  *               A is less than 4090, therefore the result worst case is 
+**  *               4090 * 16384 = 67010560.
+**  </justification>
+******************************************************************/          
+find_centroid_udr(5): A * 16384 +
+           (element(B, [A + 1]) * 
+	      (element(B, [A]) - element(B, [A - 2])) - 
+	       element(B, [A - 1]) * 
+	   (element(B, [A]) - element(B, [A + 2]))) * 16384 div 
+	   (element(B, [A + 1]) * 
+	      (element(B, [A]) - element(B, [A - 2])) + 
+	      element(B, [A - 1]) * 
+           (element(B, [A]) - element(B, [A + 2])))
+          <= 67092480 
+        may_be_deduced_from [
+          A >= 3,
+          C < 4090,
+          A <= C,
+          element(B, [A + 2]) >= 0,
+          element(B, [A + 2]) <= 65535,
+          element(B, [A + 1]) >= 0,
+          element(B, [A + 1]) <= 65535,
+          element(B, [A]) >= 0,
+          element(B, [A]) <= 65535,
+          element(B, [A - 1]) >= 0,
+          element(B, [A - 1]) <= 65535,
+          element(B, [A - 2]) >= 0,
+          element(B, [A - 2]) <= 65535,
+          element(B, [A]) >= element(B, [A + 2]),
+          element(B, [A]) > element(B, [A - 2])] .
+
+/******************************************************************
+**  <name> find_centroid_udr(6) </name>
+**  <justification> This rule is based around the equation
+**  *               c' = c + {m(c+1)*[m(c)-m(c-2)] - m(c-1)*[m(c)-m(c+2)]} 
+**  *                        ---------------------------------------------
+**  *                        {m(c+1)*[m(c)-m(c-2)] + m(c-1)*[m(c)-m(c+2)]}
+**  *               The result of this equation will be in the range
+**  *               c - 1 <= c' <= c + 1
+**  *               The maths is being done at * 16384
+**  *               A is greater than 0 and D is greater than 0 therefore
+**  *               the result of the equation must be greater than 
+**  *               - 9223372036854775808
+**  </justification>
+******************************************************************/          
+find_centroid_udr(6): A * 16384 +
+           (element(B, [A + 1]) * 
+	      (element(B, [A]) - element(B, [A - 2])) - 
+	       element(B, [A - 1]) * 
+	   (element(B, [A]) - element(B, [A + 2]))) * 16384 div 
+	   (element(B, [A + 1]) * 
+	      (element(B, [A]) - element(B, [A - 2])) + 
+	      element(B, [A - 1]) * 
+           (element(B, [A]) - element(B, [A + 2]))) + D
+          >= - 9223372036854775808
+        may_be_deduced_from [
+          A >= 3,
+          C < 4090,
+          A <= C,
+          element(B, [A + 2]) >= 0,
+          element(B, [A + 2]) <= 65535,
+          element(B, [A + 1]) >= 0,
+          element(B, [A + 1]) <= 65535,
+          element(B, [A]) >= 0,
+          element(B, [A]) <= 65535,
+          element(B, [A - 1]) >= 0,
+          element(B, [A - 1]) <= 65535,
+          element(B, [A - 2]) >= 0,
+          element(B, [A - 2]) <= 65535,
+          element(B, [A]) >= element(B, [A + 2]),
+          element(B, [A]) > element(B, [A - 2]),
+          D >= 0,
+          D <= 12615680] .    
+
+/******************************************************************
+**  <name> find_centroid_udr(7) </name>
+**  <justification> This rule is based around the equation
+**  *               c' = c + {m(c+1)*[m(c)-m(c-2)] - m(c-1)*[m(c)-m(c+2)]} 
+**  *                        ---------------------------------------------
+**  *                        {m(c+1)*[m(c)-m(c-2)] + m(c-1)*[m(c)-m(c+2)]}
+**  *               The result of this equation will be in the range
+**  *               c - 1 <= c' <= c + 1
+**  *               The maths is being done at * 16384
+**  *               A is less than 4090, therefore the result worst case is 
+**  *               4090 * 16384 = 67010560.
+**  </justification>
+******************************************************************/          
+find_centroid_udr(7): A * 16384 +
+           (element(B, [A + 1]) * 
+	      (element(B, [A]) - element(B, [A - 2])) - 
+	       element(B, [A - 1]) * 
+	   (element(B, [A]) - element(B, [A + 2]))) * 16384 div 
+	   (element(B, [A + 1]) * 
+	      (element(B, [A]) - element(B, [A - 2])) + 
+	      element(B, [A - 1]) * 
+           (element(B, [A]) - element(B, [A + 2]))) 
+          <= 9223372036854775807 
+        may_be_deduced_from [
+          A >= 3,
+          C < 4090,
+          A <= C,
+          element(B, [A + 2]) >= 0,
+          element(B, [A + 2]) <= 65535,
+          element(B, [A + 1]) >= 0,
+          element(B, [A + 1]) <= 65535,
+          element(B, [A]) >= 0,
+          element(B, [A]) <= 65535,
+          element(B, [A - 1]) >= 0,
+          element(B, [A - 1]) <= 65535,
+          element(B, [A - 2]) >= 0,
+          element(B, [A - 2]) <= 65535,
+          element(B, [A]) >= element(B, [A + 2]),
+          element(B, [A]) > element(B, [A - 2])] .    
+
+/******************************************************************
+**  <name> find_centroid_udr(8) </name>
+**  <justification> This rule is based around the equation
+**  *               c' = c + {m(c+1)*[m(c)-m(c-2)] - m(c-1)*[m(c)-m(c+2)]} 
+**  *                        ---------------------------------------------
+**  *                        {m(c+1)*[m(c)-m(c-2)] + m(c-1)*[m(c)-m(c+2)]}
+**  *               The result of this equation will be in the range
+**  *               c - 1 <= c' <= c + 1
+**  *               The maths is being done at * 16384
+**  *               If A - 3 >= B_F, then A - 1 >= B_F
+**  </justification>
+******************************************************************/
+find_centroid_udr(8): (A * 16384 +
+           (element(B, [A + 1]) * 
+	      (element(B, [A]) - element(B, [A - 2])) - 
+	       element(B, [A - 1]) * 
+	   (element(B, [A]) - element(B, [A + 2]))) * 16384 div 
+	   (element(B, [A + 1]) * 
+	      (element(B, [A]) - element(B, [A - 2])) + 
+	      element(B, [A - 1]) * 
+           (element(B, [A]) - element(B, [A + 2])))) div 16384 >= B_F
+may_be_deduced_from [
+     A - 3 >= B_F] .   
+
+/******************************************************************
+**  <name> find_centroid_udr(9) </name>
+**  <justification> This rule is based around the equation
+**  *               c' = c + {m(c+1)*[m(c)-m(c-2)] - m(c-1)*[m(c)-m(c+2)]} 
+**  *                        ---------------------------------------------
+**  *                        {m(c+1)*[m(c)-m(c-2)] + m(c-1)*[m(c)-m(c+2)]}
+**  *               The result of this equation will be in the range
+**  *               c - 1 <= c' <= c + 1
+**  *               The maths is being done at * 16384
+**  *               If A + 3 <= B_L, then A + 1 <= B_L
+**  </justification>
+******************************************************************/
+find_centroid_udr(9): (A * 16384 +
+           (element(B, [A + 1]) * 
+	      (element(B, [A]) - element(B, [A - 2])) - 
+	       element(B, [A - 1]) * 
+	   (element(B, [A]) - element(B, [A + 2]))) * 16384 div 
+	   (element(B, [A + 1]) * 
+	      (element(B, [A]) - element(B, [A - 2])) + 
+	      element(B, [A - 1]) * 
+           (element(B, [A]) - element(B, [A + 2])))) div 16384 <= B_L
+may_be_deduced_from [A + 3 <= B_L] .
+
+/******************************************************************
+**  <name> find_centroid_udr(10) </name>
+**  <justification> B_F < B_L if the difference between the values is greater
+**  *               than 4
+**  </justification>
+******************************************************************/
+find_centroid_udr(10): B_F < B_L
+may_be_deduced_from [
+     B_L - B_F > 4] .

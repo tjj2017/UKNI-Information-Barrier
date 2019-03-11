@@ -1,0 +1,31 @@
+/*********************************************************************
+**  This software is made available under the Open Government License 
+**  3.0.  Please attribute to the United Kingdom - Norway Initiative, 
+**  http://ukni.info (2016)
+*********************************************************************/
+/*********************************************************************
+**  Name: roi_area
+**  Stored Filename: $Id: roi_area.rlu 140 2016-02-03 12:34:43Z CMarsh $
+**  Status: Reviewed
+**  Created By: C Marsh
+**  <description>
+**               User defined rules for the roi_area procedure in the
+**  *            Toolbox.Peak_Net_Area package
+**  </description>
+*********************************************************************/
+
+/******************************************************************
+**  <name> roi_area_udr(1) </name>
+**  <justification> The maximum of A + B is D*E + E [or (D + 1) * E]
+**  *               If A + B > C then the mod ensures the result wraps,
+**  *               otherwise the maximum is equal to the right hand side.
+**  *               As long as A and B are positive, the summation cannot
+**  *               underflow and give a larger result.
+**  </justification>
+******************************************************************/
+roi_area_udr(1): (A + B) mod C <= (D + 1) * E
+may_be_deduced_from [
+	A <= D * E,
+	B <= E,
+	A >= 0,
+	B >= 0] .

@@ -1,0 +1,24 @@
+/*********************************************************************
+**  This software is made available under the Open Government License 
+**  3.0.  Please attribute to the United Kingdom - Norway Initiative, 
+**  http://ukni.info (2016)
+*********************************************************************/
+/*********************************************************************
+**  Name: find_645_centroid
+**  Stored Filename: $Id: find_645_centroid.rlu 140 2016-02-03 12:34:43Z CMarsh $
+**  Status: Reviewed
+**  Created By: C Marsh
+**  <description>
+**               User defined rules for the find_645_centroid procedure in the
+**  *            Measurement.Isotopics package
+**  </description>
+*********************************************************************/
+
+/******************************************************************
+**  <name> find_645_centroid_udr(1) </name>
+**  <justification> Simple re-write rule - 16384 * 19 < 18300928
+**  </justification>
+******************************************************************/
+find_645_centroid_udr(1): centroid__1 <= 18300928
+may_be_deduced_from [
+     centroid__1 div 16384 <= 19] .

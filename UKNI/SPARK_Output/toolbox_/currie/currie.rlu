@@ -1,0 +1,46 @@
+/*********************************************************************
+**  This software is made available under the Open Government License 
+**  3.0.  Please attribute to the United Kingdom - Norway Initiative, 
+**  http://ukni.info (2016)
+*********************************************************************/
+/*********************************************************************
+**  Name: currie
+**  Stored Filename: $Id: currie.rlu 140 2016-02-03 12:34:43Z CMarsh $
+**  Status: Reviewed
+**  Created By: C Marsh
+**  <description>
+**               User defined rules for Toolbox.Currie package
+**  </description>
+*********************************************************************/
+
+/******************************************************************
+**  <name> currie_udr(1) </name>
+**  <justification> Definition of a proof constant
+**  </justification>
+******************************************************************/
+currie_udr(1): max_width_pf
+may_be_replaced_by 64 .
+
+/******************************************************************
+**  <name> currie_udr(1) </name>
+**  <justification> Definition of a proof constant
+**  </justification>
+******************************************************************/
+currie_udr(2): min_width_pf
+may_be_replaced_by 10 .
+
+/******************************************************************
+**  <name> currie_udr(3) </name>
+**  <justification> Definition of a proof constant
+**  </justification>
+******************************************************************/
+currie_udr(3): max_analysis_channel_pf
+may_be_replaced_by 3666 .
+
+/******************************************************************
+**  <name> currie_udr(4) </name>
+**  <justification> Definition of a proof constant
+**  </justification>
+******************************************************************/
+currie_udr(4): min_analysis_channel_pf
+may_be_replaced_by 499 .

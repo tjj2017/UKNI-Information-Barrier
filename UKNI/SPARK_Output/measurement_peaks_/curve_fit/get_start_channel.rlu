@@ -1,0 +1,28 @@
+/*********************************************************************
+**  This software is made available under the Open Government License 
+**  3.0.  Please attribute to the United Kingdom - Norway Initiative, 
+**  http://ukni.info (2016)
+*********************************************************************/
+/*********************************************************************
+**  Name: get_start_channel
+**  Stored Filename: $Id: get_start_channel.rlu 140 2016-02-03 12:34:43Z CMarsh $
+**  Status: Reviewed
+**  Created By: C Marsh
+**  <description>
+**               User defined rules for the get_start_channel procedure in the 
+**  *            Measurement_Peaks.Curve_Fit package
+**  </description>
+*********************************************************************/
+
+/******************************************************************
+**  <name> get_start_channel_udr(1) </name>
+**  <justification> C - C div 16384 * 16384 is in the range of 8192 .. 16383
+**  *               therefore C + 16384 - (C - C div 16384 * 16384) must be
+**  *               greater than C
+**  </justification>
+******************************************************************/
+get_start_channel_udr(1) : C + 16384 - (C - C div 16384 * 16384) >= C
+may_be_deduced_from [
+     C > 98304,
+     C - C div 16384 * 16384 < 16384,
+     C - C div 16384 * 16384 > 8192] .

@@ -1,0 +1,8 @@
+notes
+pragma inline
+pragma volatile
+default_loop_assertions
+hidden_parts
+address_clauses
+representation_clauses
+with_clauses

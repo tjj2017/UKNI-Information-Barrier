@@ -1,0 +1,171 @@
+/*********************************************************************
+**  This software is made available under the Open Government License 
+**  3.0.  Please attribute to the United Kingdom - Norway Initiative, 
+**  http://ukni.info (2016)
+*********************************************************************/
+/*********************************************************************
+**  Name: calculate_chi
+**  Stored Filename: $Id: calculate_chi.rlu 140 2016-02-03 12:34:43Z CMarsh $
+**  Status: Reviewed
+**  Created By: C Marsh
+**  <description>
+**               User defined rules for the calculate_chi procedure in the
+**  *            Measurement_Peaks.Curve_Fit package
+**  </description>
+*********************************************************************/
+
+/******************************************************************
+**  <name> calculate_chi_udr(1) </name>
+**  <justification> L and A are both greater than zero, therefor L + A cannot
+**  *               underflow.  The difference between A and B is greater than
+**  *               or equal to 18, and L is less than 18.  If L + A is wrapped
+**  *               by the mod, then L + A will be less than B.  If L + A does
+**  *               not wrap, as L is less than 18 and the difference between
+**  *               A and B is greater than or equal to 18, the conclusion must
+**  *               hold true
+**  </justification>
+******************************************************************/
+calculate_chi_udr(1): (L + A) mod 65536 <= B
+may_be_deduced_from [
+     A >= 0,
+     B - A >= 18,
+     L >= 0,
+     L < 18 ] .
+
+/******************************************************************
+**  <name> calculate_chi_udr(2) </name>
+**  <justification> L and A are both greater than zero, therefor L + A cannot
+**  *               underflow.  As the maximums of L and A added together do
+**  *               not hit the modular wrap, the conclusion must hold true
+**  </justification>
+******************************************************************/
+calculate_chi_udr(2): (L + A) mod 65536 >= A
+may_be_deduced_from [
+     A >= 0,
+     A <= 4095,
+     L >= 0,
+     L < 18] .
+
+/******************************************************************
+**  <name> calculate_chi_udr(3) </name>
+**  <justification> L and SA_F are both greater than or equal to zero, therefore
+**  *               L + SA_F cannot underflow.  From L < AE and AE <= 18, L must
+**  *               be less than 18.  As the maximums of L and SA_F added together
+**  *               do not hit the modular wrap.    L < 18, SA_L - SA_F >= 18
+**  *               and no modular wrapping means the conclusion must hold true
+**  </justification>
+******************************************************************/
+calculate_chi_udr(3):(L + 1 + SA_F) mod 65536 <= SA_L
+may_be_deduced_from [
+     SA_F >= 0,
+     SA_F <= 4095,
+     L >= 0,
+     L < AE,
+     AE <= 18,
+     SA_L - SA_F >= 18] .
+
+
+/******************************************************************
+**  <name> calculate_chi_udr(4) </name>
+**  <justification> L and SA_F are both greater than or equal to zero, therefore
+**  *               L + SA_F cannot underflow.  From L < AE and AE <= 18, L must
+**  *               be less than 18.  As the maximums of L and SA_F added together
+**  *               do not hit the modular wrap, the conclusion must hold true
+**  </justification>
+******************************************************************/
+calculate_chi_udr(4):(L + 1 + SA_F) mod 65536 >= SA_F
+may_be_deduced_from [
+     SA_F >= 0,
+     SA_F <= 4095,
+     L >= 0,
+     L < AE,
+     AE <= 18] .
+
+/******************************************************************
+**  <name> calculate_chi_udr(5) </name>
+**  <justification> (element(GP, [L]) * PM + BG - element(SA, [(L + SA_F) mod 65536]) * 16384)
+**  *               squared must be positive. L + SA_F is in the range of SA_F .. SA_L,
+**  *               and all elements of SA within the range of SA_F .. SA_L are positive.
+**  *               A positive number divided by a positive number is always positive,
+**  *               so the conclusion must hold
+**  </justification>
+******************************************************************/
+calculate_chi_udr(5): (element(GP, [L]) * PM + BG - element(SA, [(L + SA_F) mod 65536]) * 16384) *
+                      (element(GP, [L]) * PM + BG - element(SA, [(L + SA_F) mod 65536]) * 16384) div
+                      (element(SA, [(L + SA_F) mod 65536]) * 16384) >= 0
+may_be_deduced_from [
+    for_all(i___1 : integer, SA_F <= i___1 and i___1 <= SA_L ->
+         0 <= element(SA, [i___1]) and element(SA, [i___1]) <= 65535),
+    for_all(i_ : integer, SA_F <= i_ and i_ <= SA_L -> element(SA, [i_]) <> 0),
+    (L + SA_F) mod 65536 <= SA_L,
+    (L + SA_F) mod 65536 >= SA_F] .
+
+/******************************************************************
+**  <name> calculate_chi_udr(6) </name>
+**  <justification> (element(GP, [L]) * PM + BG - element(SA, [(L + SA_F) mod 65536]) * 16384)
+**  *               <= 2318909440.  2318909440 squared = 5377340990921113600
+**  *               and all elements of SA within the range of SA_F .. SA_L are positive,
+**  *               so the conclusion must hold
+**  </justification>
+******************************************************************/
+calculate_chi_udr(6) : (element(GP, [L]) * PM + BG - element(SA, [(L + SA_F) mod 65536]) * 16384) *
+                       (element(GP, [L]) * PM + BG - element(SA, [(L + SA_F) mod 65536]) * 16384) div
+                       (element(SA, [(L + SA_F) mod 65536]) * 16384) <= 5377340990921113600
+may_be_deduced_from [
+    element(GP, [L]) * PM + BG - element(SA, [(L + SA_F) mod 65536]) * 16384 <= 2318909440,
+    for_all(i___1 : integer, SA_F <= i___1 and i___1 <= SA_L ->
+        0 <= element(SA, [i___1]) and element(SA, [i___1]) <= 65535),
+    for_all(i_ : integer, SA_F <= i_ and i_ <= SA_L -> element(SA, [i_]) <> 0),
+    (L + SA_F) mod 65536 <= SA_L,
+    (L + SA_F) mod 65536 >= SA_F] .
+
+/******************************************************************
+**  <name> calculate_chi_udr(7) </name>
+**  <justification> (element(GP, [L]) * PM + BG - element(SA, [(L + SA_F) mod 65536]) * 16384)
+**  *               squared must be positive. L + SA_F is in the range of SA_F .. SA_L,
+**  *               and all elements of SA within the range of SA_F .. SA_L are positive.
+**  *               A positive number divided by a positive number is always positive,
+**  *               so the conclusion must hold
+**  </justification>
+******************************************************************/
+calculate_chi_udr(7): (element(GP, [L]) * PM + BG - element(SA, [(L + SA_F) mod 65536]) * 16384) *
+		      (element(GP, [L]) * PM + BG - element(SA, [(L + SA_F) mod 65536]) * 16384) div
+                      (element(SA, [(L + SA_F) mod 65536]) * 16384) >= - 9223372036854775808
+may_be_deduced_from [
+    for_all(i___1 : integer, SA_F <= i___1 and i___1 <= SA_L ->
+        0 <= element(SA, [i___1]) and element(SA, [i___1]) <= 65535),
+    for_all(i_ : integer, SA_F <= i_ and i_ <= SA_L -> element(SA, [i_]) <> 0),
+    (L + SA_F) mod 65536 <= SA_L,
+    (L + SA_F) mod 65536 >= SA_F] .
+
+/******************************************************************
+**  <name> calculate_chi_udr(8) </name>
+**  <justification> (element(GP, [L]) * PM + BG - element(SA, [(L + SA_F) mod 65536]) * 16384)
+**  *               <= 2318909440.  2318909440 squared = 5377340990921113600
+**  *               and all elements of SA within the range of SA_F .. SA_L are positive,
+**  *               so the conclusion must hold
+**  </justification>
+******************************************************************/
+calculate_chi_udr(8) : (element(GP, [L]) * MP + BG - element(SA, [(L + SA_F) mod 65536]) * 16384) *
+                       (element(GP, [L]) * MP + BG - element(SA, [(L + SA_F) mod 65536]) * 16384) div
+                       (element(SA, [(L + SA_F) mod 65536]) * 16384) <= 9223372036854775807
+may_be_deduced_from [
+    element(GP, [L]) * PM + BG - element(SA, [(L + SA_F) mod 65536]) * 16384 <= 2318909440,
+    for_all(i___1 : integer, SA_F <= i___1 and i___1 <= SA_L -> 0 <= element(SA, [i___1]) and element(SA, [i___1]) <= 65535),
+    for_all(i_ : integer, SA_F <= i_ and i_ <= SA_L -> element(SA, [i_]) <> 0),
+    (L + SA_F) mod 65536 <= SA_L,
+    (L + SA_F) mod 65536 >= SA_F] .
+
+
+/******************************************************************
+**  <name> calculate_chi_udr(9) </name>
+**  <justification> L + SA_F is in the range of SA_F .. SA_L,
+**  *               and all elements of SA within the range of SA_F .. SA_L are non zero,
+**  *               so the conclusion must hold
+**  </justification>
+******************************************************************/
+calculate_chi_udr(9): element(SA, [(L + SA_F) mod 65536]) * 16384 <> 0
+may_be_deduced_from [
+     (L + SA_F) mod 65536 <= SA_L,
+     (L + SA_F) mod 65536 >= SA_F,
+     for_all(i_ : integer, SA_F <= i_ and i_ <= SA_L -> element(SA, [i_]) <> 0)].
