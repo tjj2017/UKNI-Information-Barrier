@@ -139,6 +139,23 @@ is
    pragma Inline (Send_Message_64);
 
    -------------------------------------------------------------------
+   --  <name> Send_Message_Comma </name>
+   --  <description> This is used to transmit a comma
+   --  *             For data separation.
+   --  </description>
+   --  <input name="None">
+   --  </input>
+   --  <output name="None">
+   --  </output>
+   -------------------------------------------------------------------
+   procedure Send_Message_Comma;
+   --# derives;
+   --  This subprogram was missing from the git distribution and
+   --  has been added by TJJ for ASVAT.  It may not work the same as
+   --  the unknown functionality of the missing subprogram
+   pragma Inline (Send_Message_Comma);
+
+   -------------------------------------------------------------------
    --  <name> Send_Message_New_Line </name>
    --  <description> This is used to transmit a new line
    --  *             For data separation.

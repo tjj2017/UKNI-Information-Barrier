@@ -382,6 +382,18 @@ is
 
    end Send_Message_8;
 
+   -------------------------------------------------------------------------
+   --  Name: Send_Message_Comma
+   --  Implementation Information:
+   --  Implements a a body for the subprogram missing from the distribution.
+   --  The functionality may not correspond to the missing subprogram.
+   -------------------------------------------------------------------------
+   procedure Send_Message_Comma
+   is
+   begin
+      Send_Usart_1 (value => 44);
+   end Send_Message_Comma;
+
    --------------------------------------------------------------------
    --  Name: Send_Message_new_Line
    --  Implementation Information: None
