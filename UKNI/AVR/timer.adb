@@ -1,3 +1,9 @@
+-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+--  ASVAT 3-May-2019 timer.shw
+--  This a shadow file which replaces timer.adb for ASVAT analysis since the
+--  distributed package body uses low-level hardware features not handled
+--  by the basic gnat compiler or ASVAT.
+-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ----------------------------------------------------------------------
 --  This software is made available under the Open Government License
 --  3.0.  Please attribute to the United Kingdom - Norway Initiative,
@@ -82,9 +88,12 @@ is
    --           Timeout       - Boolean flag stating whether the timer has reached its target
    --                           number of seconds
    -------------------------------------------------------------------
-   procedure Timer_Interrupt;
-   pragma Machine_Attribute (Timer_Interrupt, "signal");
-   pragma Export (C, Timer_Interrupt, "__vector_timer3_capt");
+
+   --  ASVAT remove timer interrupt subprogram association.
+   --  ASVAT does not handle Machine_Attributes or non-Ada languages
+--     procedure Timer_Interrupt;
+--     pragma Machine_Attribute (Timer_Interrupt, "signal");
+--     pragma Export (C, Timer_Interrupt, "__vector_timer3_capt");
 
    procedure Timer_Interrupt is
    begin
@@ -105,24 +114,31 @@ is
    procedure Init is
 
    begin
+      --  AVSAT - the source of this subprogram has been replaced by a null
+      --  statement as it contains assembler statements not analyzed by
+      --  AVSAT
 
+      null;
+
+      --  AVSAT removed
+      --  The call to this procedure was to initialise the timer hardware
       --  Set timer input capture
-      ICR3H := 16#38#;    -- These registers set the  -- for 14.745MHz clock
-      ICR3L := 16#3F#;    -- "Top" value of the timer
-
-      --  Enable Input Capture interrupt.
-      TIMSK3 := 16#20#;
-
-      --  Set Timer 3 Mode.
-      TCCR3A := 16#00#;
-      TCCR3B := 16#1D#; -- xxxxx101 means clk div by 1024
-
-      --  Enable global interrupts.
-      System.Machine_Code.Asm ("sei", Volatile => True);
-
-      --  reset the timer counter
-      TCNT3H := 0;
-      TCNT3L := 0;
+--        ICR3H := 16#38#;    -- These registers set the  -- for 14.745MHz clock
+--        ICR3L := 16#3F#;    -- "Top" value of the timer
+--
+--        --  Enable Input Capture interrupt.
+--        TIMSK3 := 16#20#;
+--
+--        --  Set Timer 3 Mode.
+--        TCCR3A := 16#00#;
+--        TCCR3B := 16#1D#; -- xxxxx101 means clk div by 1024
+--
+--        --  Enable global interrupts.
+--        System.Machine_Code.Asm ("sei", Volatile => True);
+--
+--        --  reset the timer counter
+--        TCNT3H := 0;
+--        TCNT3L := 0;
    end Init;
 
    -------------------------------------------------------------------
