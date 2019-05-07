@@ -1,16 +1,16 @@
 project Ib is
 
-   for Object_Dir use "..\IB_Phase3_Build";
-   for Main use ("Main.adb");
+   for Object_Dir use "../IB_Phase3_Build";
+   for Main use ("main.adb");
    for Source_Dirs use (".", "AVR");
-   for Languages use ("Ada");
+   for Languages use ("ada");
 
    package Ide is
       -- Hardcoded Paths of Project location and number of processors.
       for Default_Switches ("sparkformat") use ("-add_modes", "-d=i", "-or=alphabetic", "-compress");
       for Default_Switches ("sparksimp") use ("-nz", "-p=4");
-      for Default_Switches ("examiner") use ("-flow_analysis=information", "-index_file=C:\IB_Working\Main.idx", "-vcg", "-config=C:\IB_Working\config.cfg", "-language=2005", "-statistics", 
-           "-warning_file=C:\IB_Working\warnings.wrn", "-casing", "-rules=keen", "-html", "-error_explanations=every");
+      for Default_Switches ("examiner") use ("-flow_analysis=information", "-index_file=main.idx", "-vcg", "config.cfg", "-language=2005", "-statistics", 
+           "-warning_file=warnings.wrn", "-casing", "-rules=keen", "-html", "-error_explanations=every");
       for Gnat use "avr-gnat";
       for Gnatlist use "avr-gnatls";
       for Debugger_Command use "avr-gdb";
