@@ -2,7 +2,7 @@ project UKNI is
 
    for Source_Dirs use (".", "AVR");
    for Object_Dir use "../IB_Phase3_Build/";
-   for Main use ("main.adb");
+   for Main use ("ib_main.adb", "main.adb");
 
    package Naming is
       for Body_Suffix ("ada") use ".adb";

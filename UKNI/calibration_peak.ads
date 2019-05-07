@@ -37,6 +37,10 @@ package Calibration_Peak is
    --  Integer offset to adjust the expected channel of the calibration peak
    subtype Offset_Type is Integer range -20 .. 20;
 
+   --  ASVAT declare missing type.  This is probably not the same as the
+   --  mising type declaration.
+   subtype Cal_Offset_Type is Offset_Type;
+
    --  Type definition of a peak
    type Peak_Record_Type is
       record

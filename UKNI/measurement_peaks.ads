@@ -82,6 +82,10 @@ package Measurement_Peaks
    subtype Difference_Type is Long_Integer range
      -1 * Toolbox.MULT .. 1 * Toolbox.MULT;
 
+   --  ASVAT add missing type declaration.  This is probably not the same as
+   --  the mising declaration.
+   subtype ISO_Difference_Type is Difference_Type;
+
    --  Type containing the valid range for the FWHM
    subtype ISO_FWHM_Type is Mod_Types.Unsigned_32 range 6 * Toolbox.MULT .. 9 * Toolbox.MULT;
 
@@ -115,6 +119,10 @@ package Measurement_Peaks
    --  Type for IB Channels at
    type ISO_Information_Type is array (ISO_Identifier_Type) of
      ISO_Channel_Type;
+
+   --  ASVAT add missing type declaration.  This is probably not the same as
+   --  the mising declaration.
+   subtype Extended_Channel_Type is Mod_Types.Unsigned_64;
 
    -------------------------------------------------------------------
    --  Constants section 2
