@@ -1,9 +1,9 @@
-Mod_Types.ads
+﻿Mod_Types.ads
 registers.ads
 Toolbox.ads
 Channel_Types.ads
 ADC.ads
-AVR\ADC.adb
+AVR/ADC.adb
 Calibration_Peak.ads
 Count_Types.ads
 Region_Of_Interest.ads
@@ -29,7 +29,7 @@ Toolbox-FWHM.ads
 Toolbox-FWHM.adb
 Calibration.ads
 calibration-gain_adjustment.ads
-AVR\calibration-gain_adjustment.adb
+AVR/calibration-gain_adjustment.adb
 Calibration.adb
 Count_Range_Check.ads
 AVR/Count_Range_Check.adb
@@ -42,9 +42,9 @@ Measurement-Isotopics.ads
 Measurement-Isotopics.adb
 Measurement.adb
 Switch.ads
-AVR\Switch.adb
+AVR/Switch.adb
 memory_checks.ads
-AVR\memory_checks.adb
+AVR/memory_checks.adb
 Main.adb
 Main-Measure.adb
 main-verify_calibration.adb

@@ -8,7 +8,7 @@ Calibration.Gain_Adjustment body          is in AVR/calibration-gain_adjustment.
 Calibration_Peak            specification is in Calibration_Peak.ads
 Channel_Types               specification is in Channel_Types.ads
 Count_Range_Check           specification is in Count_Range_Check.ads
-Count_Range_Check           body          is in AVR\Count_Range_Check.adb
+Count_Range_Check           body          is in AVR/Count_Range_Check.adb
 Count_Types                 specification is in Count_Types.ads
 Indicator                   specification is in Indicator.ads
 Indicator                   body          is in AVR/Indicator.adb
@@ -39,7 +39,7 @@ Mod_Types                   specification is in Mod_Types.ads
 Region_Of_Interest          specification is in Region_Of_Interest.ads
 Registers                   specification is in registers.ads
 Switch                      specification is in Switch.ads
-Switch                      body          is in AVR\Switch.adb
+Switch                      body          is in AVR/Switch.adb
 Timeouts                    specification is in timeouts.ads
 Timer                       specification is in Timer.ads
 Timer                       body          is in AVR/timer.adb
