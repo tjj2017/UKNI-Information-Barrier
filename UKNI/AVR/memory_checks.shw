@@ -1,8 +1,9 @@
 -- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 --  ASVAT 3-May-2019 memory_checks.shw
 --  This a shadow file which replaces memory_checks.adb for ASVAT analysis
---  since the distributed package body uses an assember program not hendled
+--  since the distributed package body uses an assember program not handled
 --  ASVAT.
+--  The distributed file is in memory_checks.adb
 -- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 -----------------------------------------------------------------------
 --  This software is made available under the Open Government License
@@ -22,10 +23,10 @@
 --
 ----------------------------------------------------------------------
 
-with Mod_Types,
-     System,
-     System.Machine_Code,
-     System.Storage_Elements,
+with Mod_Types,  --  ASVAT does not currently support System or its children
+--     System,
+--     System.Machine_Code,
+--     System.Storage_Elements,
      Usart1;
 
 use type Mod_Types.Unsigned_8;
@@ -42,17 +43,20 @@ package body Memory_Checks is
    --  Register Information
    ----------------------------------------------------------------------
    R2 : Mod_Types.Unsigned_8;
-   for R2'Address use System'To_Address (16#02#);
-   pragma Volatile (R2);
+   --  for R2'Address use System'To_Address (16#02#);
+     pragma Volatile (R2);
 
    R3 : Mod_Types.Unsigned_8;
-   for R3'Address use System'To_Address (16#03#);
-   pragma Volatile (R3);
+   --  for R3'Address use System'To_Address (16#03#);
+     pragma Volatile (R3);
    ----------------------------------------------------------------------
 
    ----------------------------------------------------------------------
    --  Name                       : PBIT_Test
    --  Implementation Information : None.
+   ----------------------------------------------------------------------
+   --  ASVAT: the body of this function has been replaced by a simple
+   --  return True; as the original body used address arithmetic.
    ----------------------------------------------------------------------
    function PBIT_Test return Boolean is
       ----------------------------------------------------------------------
@@ -63,55 +67,56 @@ package body Memory_Checks is
       --                              read from.
       --  Implementation Information : None.
       ----------------------------------------------------------------------
-      function Address_OK
-        (Address    : in System.Storage_Elements.Integer_Address)
-         return Boolean
-      is
-         --  Current value of a memory location
-         Current_Value : Mod_Types.Unsigned_8;
-
-         --  whether the check on the memory location has passed
-         Test_Passed   : Boolean := True;
-
-         --  Memory location under test
-         Location      : Mod_Types.Unsigned_8;
-         for Location'Address use System.Storage_Elements.To_Address (Value => (Address));
-      begin
-         --  store the current value
-         Current_Value := Location;
-         --  read and write 2#01010101# from this memory loc
-         Location := 16#55#;
-         if Location /= 16#55# then
-            Test_Passed := False;
-         end if;
-
-         --  read and write 2#10101010# from this memory loc
-         Location := 16#AA#;
-         if Location /= 16#AA# then
-            Test_Passed := False;
-         end if;
-
-         --  restore original value
-         Location := Current_Value;
-
-         return Test_Passed;
-      end Address_OK;
-
-      Test_Passed : Boolean := True;
-
+--      function Address_OK
+--        (Address    : in System.Storage_Elements.Integer_Address)
+--         return Boolean
+--      is
+--         --  Current value of a memory location
+--         Current_Value : Mod_Types.Unsigned_8;
+--         --  whether the check on the memory location has passed
+--         Test_Passed   : Boolean := True;
+--
+--         --  Memory location under test
+--         Location      : Mod_Types.Unsigned_8;
+--         for Location'Address use System.Storage_Elements.To_Address (Value => (Address));
+--      begin
+--         --  store the current value
+--         Current_Value := Location;
+--         --  read and write 2#01010101# from this memory loc
+--         Location := 16#55#;
+--         if Location /= 16#55# then
+--            Test_Passed := False;
+--         end if;
+--
+--         --  read and write 2#10101010# from this memory loc
+--         Location := 16#AA#;
+--         if Location /= 16#AA# then
+--            Test_Passed := False;
+--         end if;
+--
+--         --  restore original value
+--         Location := Current_Value;
+--
+--         return Test_Passed;
+--      end Address_OK;
+--
+--      Test_Passed : Boolean := True;
+--
+--   begin
+--      for I in Mod_Types.Unsigned_16 range RAM_Start .. RAM_End loop
+--
+--         if not Address_OK
+--                  (Address => System.Storage_Elements.Integer_Address (I))
+--         then
+--            Test_Passed := False;
+--         end if;
+--         exit when not Test_Passed;
+--
+--      end loop;
+--
+--      return Test_Passed;
    begin
-      for I in Mod_Types.Unsigned_16 range RAM_Start .. RAM_End loop
-
-         if not Address_OK
-                  (Address => System.Storage_Elements.Integer_Address (I))
-         then
-            Test_Passed := False;
-         end if;
-         exit when not Test_Passed;
-
-      end loop;
-
-      return Test_Passed;
+      return True;
    end PBIT_Test;
 
    ----------------------------------------------------------------------
@@ -252,20 +257,21 @@ package body Memory_Checks is
 --           "ldi r17, lo8(__data_end)" & LF & HT &
 --           "call crc_gen",
 --           Volatile => True);
---
---        Usart1.Send_String (Item => "R2: ");
---        Usart1.Send_Message_8 (Data => R2);
---        Usart1.Send_Message_New_Line;
---
---        Usart1.Send_String (Item => "R3: ");
---        Usart1.Send_Message_8 (Data => R3);
---        Usart1.Send_Message_New_Line;
---
---        --  r2 and r3 should be zero if the test has passed
---        return R2 = 0 and R3 = 0;
-
+    
    begin
-      return True;
+     --  ASVAT: Still use Usart1
+     R2 := 0;
+     R3 := 0;
+     Usart1.Send_String (Item => "R2: ");
+     Usart1.Send_Message_8 (Data => R2);
+     Usart1.Send_Message_New_Line;
+     Usart1.Send_String (Item => "R3: ");
+     Usart1.Send_Message_8 (Data => R3);
+     Usart1.Send_Message_New_Line;
+
+     --  r2 and r3 should be zero if the test has passed
+     return R2 = 0 and R3 = 0;
+     
    end CRC_Test;
 
 end Memory_Checks;

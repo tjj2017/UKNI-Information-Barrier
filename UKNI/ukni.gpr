@@ -11,6 +11,8 @@ project UKNI is
       for Body ("timer") use "timer.shw";
       for Spec ("memory_checks") use "memory_checks.ads";
       for Body ("memory_checks") use "memory_checks.shw";
+      for Spec ("usart1") use "usart1.ads";
+      for Body ("usart1") use "usart1.shw";
    end Naming;
 
 end UKNI;

@@ -16,7 +16,7 @@
 --  Description: This package control the main system timer
 ----------------------------------------------------------------------
 
-with System.Machine_Code;
+-- with System.Machine_Code; -- ASVAT does not support System
 
 package body Timer
 is
@@ -35,34 +35,34 @@ is
 
    --  Top value of the timer
    ICR3H         : Mod_Types.Unsigned_8;
-   for ICR3H'Address use System'To_Address (16#97#);
+--   for ICR3H'Address use System'To_Address (16#97#);
    pragma Volatile (ICR3H);
 
    ICR3L         : Mod_Types.Unsigned_8;
-   for ICR3L'Address use System'To_Address (16#96#);
+--   for ICR3L'Address use System'To_Address (16#96#);
    pragma Volatile (ICR3L);
 
    --  Timer interrupt mask
    TIMSK3        : Mod_Types.Unsigned_8;
-   for TIMSK3'Address use System'To_Address (16#71#);
+--   for TIMSK3'Address use System'To_Address (16#71#);
    pragma Volatile (TIMSK3);
 
    --  Timer mode
    TCCR3A        : Mod_Types.Unsigned_8;
-   for TCCR3A'Address use System'To_Address (16#90#);
+--   for TCCR3A'Address use System'To_Address (16#90#);
    pragma Volatile (TCCR3A);
 
    TCCR3B        : Mod_Types.Unsigned_8;
-   for TCCR3B'Address use System'To_Address (16#91#);
+--   for TCCR3B'Address use System'To_Address (16#91#);
    pragma Volatile (TCCR3B);
 
    --  Current count on the header
    TCNT3H        : Mod_Types.Unsigned_8;
-   for TCNT3H'Address use System'To_Address (16#95#);
+--   for TCNT3H'Address use System'To_Address (16#95#);
    pragma Volatile (TCNT3H);
 
    TCNT3L        : Mod_Types.Unsigned_8;
-   for TCNT3L'Address use System'To_Address (16#94#);
+--   for TCNT3L'Address use System'To_Address (16#94#);
    pragma Volatile (TCNT3L);
 
    -------------------------------------------------------------------
