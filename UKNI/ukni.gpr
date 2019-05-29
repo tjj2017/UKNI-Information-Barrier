@@ -5,7 +5,7 @@ project UKNI is
    for Main use ("ib_main.adb", "main.adb");
 
    package Naming is
-      for Body_Suffix ("ada") use ".adb";
+      for Body_Suffix ("Ada") use ".adb";
       for Separate_Suffix use ".adb";
       for Spec ("timer") use "timer.ads";
       for Body ("timer") use "timer.shw";
