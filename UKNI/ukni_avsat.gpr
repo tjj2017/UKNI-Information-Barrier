@@ -20,6 +20,15 @@ project UKNI_AVSAT is
       for Spec ("memory_checks") use "memory_checks.ads";
       for Body ("memory_checks") use "memory_checks.shw";
    end Naming;
+   
+   package Binder is
+      for Driver ("Ada") use "echo";
+   end Binder;
+
+   package Linker is
+      -- Use symtab2gb as the linker
+      for Driver use "/Users/trevorj/oxford/misc/trials/gprbuild/symtab_link/symtab_link";
+   end Linker;
 
 end UKNI_AVSAT;
 
